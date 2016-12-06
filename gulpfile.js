@@ -95,7 +95,7 @@ gulp.task('svgstore', function (callback) {
   let spritePath = dirs.source + '/img/svg-sprite';          // константа с путем к исходникам SVG-спрайта
   if(fileExist(spritePath) !== false) {
     return gulp.src(spritePath + '/*.svg')                   // берем только SVG файлы из этой папки, подпапки игнорируем
-      .pipe(plumber({ errorHandler: onError }))
+      // .pipe(plumber({ errorHandler: onError }))
       .pipe(svgmin(function (file) {
         return {
           plugins: [{
@@ -110,7 +110,7 @@ gulp.task('svgstore', function (callback) {
         $('svg').attr('style',  'display:none');             // дописываем получающемуся SVG-спрайту инлайновое сокрытие
       }))
       .pipe(rename('sprite-svg.svg'))
-      .pipe(gulp.dest(dirs.build + '/img'));
+      .pipe(gulp.dest(dirs.source + '/img'));
   }
   else {
     console.log('Нет файлов для сборки SVG-спрайта');
@@ -189,7 +189,8 @@ gulp.task('css:fonts:woff2', function (callback) {
 // ЗАДАЧА: Сборка всего
 gulp.task('build', gulp.series(                             // последовательно:
   'clean',                                                  // последовательно: очистку папки сборки
-  gulp.parallel('less', 'img', 'js', 'svgstore', 'css:fonts:woff', 'css:fonts:woff2'),
+  'svgstore',
+  gulp.parallel('less', 'img', 'js', 'css:fonts:woff', 'css:fonts:woff2'),
   'html'                                                    // последовательно: сборку разметки
 ));
 
@@ -221,10 +222,16 @@ gulp.task('serve', gulp.series('build', function() {
     gulp.series('img', reloader)                            // при изменении оптимизируем, копируем и обновляем в браузере
   );
 
+  gulp.watch(                                               // следим за изображениями
+    dirs.source + '/img/svg-sprite/*.svg}',
+    gulp.series('svgstore', reloader)                            // при изменении оптимизируем, копируем и обновляем в браузере
+  );
+
   gulp.watch(                                               // следим за JS
     dirs.source + '/js/*.js',
     gulp.series('js', reloader)                            // при изменении пересобираем и обновляем в браузере
   );
+
 
 }));
 
