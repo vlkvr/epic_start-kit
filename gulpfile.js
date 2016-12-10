@@ -65,10 +65,12 @@ gulp.task('html', function() {
 });
 
 gulp.task('pug', function() {
-  return gulp.src(dirs.source + '/**/*.pug')
+  return gulp.src(dirs.source + '/pug/*.pug')
     .pipe(plumber({ errorHandler: onError }))
-    .pipe(pug())
-    .pipe(gulp.dest(dirs.build));
+    .pipe(pug({
+      pretty: true
+    }))
+    .pipe(gulp.dest(dirs.build + '/pug/'));
 });
 
 // ЗАДАЧА: Копирование изображений

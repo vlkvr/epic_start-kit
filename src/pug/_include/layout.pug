@@ -1,0 +1,28 @@
+include variables.pug
+include mixins.pug
+
+block config
+  - var myName = 'Roman'
+  - var myAge = 33
+
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    block head
+  body
+    .container
+      .banner
+        div баннер на всех страницах
+      nav.main_nav
+        ul.main_nav--list
+          each menuItem in menu
+            li.main_nav--item: a.main_nav--link(href="" + menuItem.url) #{menuItem.name}
+      .content
+        block content
+          h1 Некий заголовок
+
+    aside.aside
+      p Сайдбар
+      block aside

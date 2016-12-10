@@ -1,0 +1,29 @@
+include _include/variables.pug
+include _include/mixins.pug
+
+doctype html
+
+html(lang="ru")
+
+  head
+    meta(charset="UTF-8")
+    title Обо мне
+
+  body(class=auth ? 'i-know-you' : 'who-you-are')
+    //- include ../img/sprite-svg.svg
+
+    nav.main_nav
+      ul.main_nav--list
+        each menuItem in menu
+          li.main_nav--item: a.main_nav--link(href="" + menuItem.url) #{menuItem.name}
+
+
+    //-
+      p!= html
+      h1 header 1 !{html}
+
+      ul: li: a(href="") сцылко
+
+      p some text
+        =' '
+        span other text

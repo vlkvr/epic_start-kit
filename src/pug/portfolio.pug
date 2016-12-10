@@ -1,16 +1,14 @@
 extends _include/layout.pug
 
 block head
-  title Главная страница
+  title Портфолио
 
 block content
 
-  h1 Я видел pug!
-  p это контент
-
-block aside
-  div.banner-2
-    a: img(src="/" alt="картинка")
+  h1 Заголовок Портфолио
+  div
+    +portfolioItem('http://www.100tovarov.ru/showpic.asp?type=2&id=1052', 'Портфель', '2016-12-09')
+    +portfolioItem('http://www.100tovarov.ru/showpic.asp?type=2&id=1052', 'Портфель', '2016-12-15')
 
 
 //-
@@ -23,7 +21,7 @@ block aside
 
     head
       meta(charset="UTF-8")
-      title Главная страница
+      title Портфолио
 
     body(class=auth ? 'i-know-you' : 'who-you-are')
       //- include ../img/sprite-svg.svg
@@ -32,6 +30,11 @@ block aside
         ul.main_nav--list
           each menuItem in menu
             li.main_nav--item: a.main_nav--link(href="" + menuItem.url) #{menuItem.name}
+
+      div
+        +portfolioItem('http://www.100tovarov.ru/showpic.asp?type=2&id=1052', 'Портфель', '2016-12-09')
+        +portfolioItem('http://www.100tovarov.ru/showpic.asp?type=2&id=1052', 'Портфель', '2016-12-15')
+
 
 
       //-
